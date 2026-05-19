@@ -50,7 +50,6 @@ INSTALLED_APPS = [
     'productsApp',
     'serviceApp',
     'scienceApp',
-    'DjangoUeditor',
     'haystack',
     'widget_tweaks',
 ]

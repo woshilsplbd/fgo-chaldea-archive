@@ -29,7 +29,6 @@ urlpatterns = [
     path('productsApp/', include('productsApp.urls')),  # 产品中心
     path('scienceApp/', include('scienceApp.urls')),  # 科研基地
     path('serviceApp/', include('serviceApp.urls')),  # 服务支持
-    path('ueditor/',include('DjangoUeditor.urls' )),  # 富文本应用
     path('search/', include('haystack.urls')),        # 搜索应用 
 ]
 
