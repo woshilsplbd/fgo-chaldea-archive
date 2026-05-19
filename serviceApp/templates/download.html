@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+新手入门
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="fgo-hero">
+            <img class="img-responsive" src="{% static 'img/sakurafive.png' %}" alt="攻略资料">
+            <div class="fgo-hero-title">
+                <h1>新手入门</h1>
+                <p>从零开始了解 Fate/Grand Order 的一切。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="fgo-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="fgo-section-header">欢迎来到迦勒底，新人御主</h2>
+
+                <div class="fgo-card">
+                    <h3>🎮 游戏基础</h3>
+                    <p>
+                        Fate/Grand Order 是一款回合制指令卡战斗 RPG。玩家作为御主，率领最多六名从者组成的队伍，
+                        在七个章节的主线剧情中探索特异点、修复人理。游戏的核心循环为：通关自由本获取素材 →
+                        强化从者灵基 → 挑战更高难度关卡。
+                    </p>
+                    <div style="margin-top:10px">
+                        <span class="fgo-tag">回合制</span>
+                        <span class="fgo-tag">指令卡</span>
+                        <span class="fgo-tag">RPG</span>
+                        <span class="fgo-tag">从者养成</span>
+                    </div>
+                </div>
+
+                <div class="fgo-card">
+                    <h3>🌟 从者获取</h3>
+                    <p>
+                        从者主要通过「圣晶石召唤」（卡池抽卡）获得。每个卡池分为「剧情池」（常驻）和「限定池」（期间限定）。
+                        五星从者基础概率为 1%，此外还有「友情点召唤」可获取一至三星从者与概念礼装。
+                    </p>
+                    <p style="margin-top:8px;color:#facc15;font-size:13px">
+                        💡 小贴士：限定池的从者不会进入剧情池，指定从者出现时请务必确认卡池信息。
+                    </p>
+                </div>
+
+                <div class="fgo-card">
+                    <h3>📈 从者养成</h3>
+                    <p>
+                        从者养成分为：<strong>升级</strong>（喂种火提升等级）、<strong>灵基再临</strong>（消耗素材突破等级上限并改变卡面）、
+                        <strong>技能强化</strong>（消耗素材与 QP 提升技能等级）、<strong>从者币</strong>（用于开放追加技能与等级上限）。
+                        每个从者的最终养成目标为「120 级 + 技能 10/10/10 + 追加技能全满」。
+                    </p>
+                    <div style="margin-top:10px">
+                        <span class="fgo-tag">种火</span>
+                        <span class="fgo-tag">灵基再临</span>
+                        <span class="fgo-tag">技能石</span>
+                        <span class="fgo-tag">传承结晶</span>
+                        <span class="fgo-tag">从者币</span>
+                    </div>
+                </div>
+
+                <div class="fgo-card">
+                    <h3>⚡ 指令卡系统</h3>
+                    <p>
+                        战斗界面下方有五张指令卡，分为三种类型：<strong>Buster</strong>（红卡，高伤害）、
+                        <strong>Arts</strong>（蓝卡，增加 NP）、<strong>Quick</strong>（绿卡，产星）。
+                        选择三张卡组成 Chain 可触发额外效果：三张同色卡触发 Braver/Buster/Arts/Quick Chain，
+                        三张不同从者的卡触发 Team Chain。
+                    </p>
+                </div>
+
+                <div style="text-align:center;margin-top:24px">
+                    <a class="btn btn-default" href="{% url 'serviceApp:platform' %}" style="border-color:rgba(196,181,253,.42);color:#e9d5ff;background:rgba(15,23,42,.62)">进阶：配队思路与周回攻略 →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

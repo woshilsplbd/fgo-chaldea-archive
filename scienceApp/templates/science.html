@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+灵基研究室
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="fgo-hero">
+            <img class="img-responsive" src="{% static 'img/bbdubai.jpg' %}" alt="灵基研究室">
+            <div class="fgo-hero-title">
+                <h1>灵基研究室</h1>
+                <p>深入 Fate/Grand Order 的战斗机制与系统解析。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="fgo-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="fgo-section-header">职阶相性</h2>
+
+                <div class="fgo-card">
+                    <h3>九大基础职阶</h3>
+                    <p>
+                        FGO 中从者拥有不同的职阶，职阶之间存在克制关系，正确利用克制能造成 2 倍伤害。
+                        以下是完整的职阶克制表：
+                    </p>
+                    <div style="margin-top:12px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+                        <div style="padding:10px;border:1px solid rgba(196,181,253,.3);border-radius:4px;background:rgba(15,23,42,.5);text-align:center">
+                            <div style="color:#f87171;font-weight:700;font-size:20px">Saber</div>
+                            <div style="color:#a78bfa;font-size:12px;margin-top:4px">克制 Lancer<br>被 Archer 克制</div>
+                        </div>
+                        <div style="padding:10px;border:1px solid rgba(196,181,253,.3);border-radius:4px;background:rgba(15,23,42,.5);text-align:center">
+                            <div style="color:#fbbf24;font-weight:700;font-size:20px">Archer</div>
+                            <div style="color:#a78bfa;font-size:12px;margin-top:4px">克制 Saber<br>被 Lancer 克制</div>
+                        </div>
+                        <div style="padding:10px;border:1px solid rgba(196,181,253,.3);border-radius:4px;background:rgba(15,23,42,.5);text-align:center">
+                            <div style="color:#60a5fa;font-weight:700;font-size:20px">Lancer</div>
+                            <div style="color:#a78bfa;font-size:12px;margin-top:4px">克制 Archer<br>被 Saber 克制</div>
+                        </div>
+                        <div style="padding:10px;border:1px solid rgba(196,181,253,.3);border-radius:4px;background:rgba(15,23,42,.5);text-align:center">
+                            <div style="color:#a78bfa;font-weight:700;font-size:20px">Rider</div>
+                            <div style="color:#a78bfa;font-size:12px;margin-top:4px">克制 Caster<br>被 Assassin 克制</div>
+                        </div>
+                        <div style="padding:10px;border:1px solid rgba(196,181,253,.3);border-radius:4px;background:rgba(15,23,42,.5);text-align:center">
+                            <div style="color:#6ee7b7;font-weight:700;font-size:20px">Caster</div>
+                            <div style="color:#a78bfa;font-size:12px;margin-top:4px">克制 Assassin<br>被 Rider 克制</div>
+                        </div>
+                        <div style="padding:10px;border:1px solid rgba(196,181,253,.3);border-radius:4px;background:rgba(15,23,42,.5);text-align:center">
+                            <div style="color:#f472b6;font-weight:700;font-size:20px">Assassin</div>
+                            <div style="color:#a78bfa;font-size:12px;margin-top:4px">克制 Rider<br>被 Caster 克制</div>
+                        </div>
+                        <div style="padding:10px;border:1px solid rgba(196,181,253,.3);border-radius:4px;background:rgba(15,23,42,.5);text-align:center">
+                            <div style="color:#e11d48;font-weight:700;font-size:20px">Berserker</div>
+                            <div style="color:#a78bfa;font-size:12px;margin-top:4px">克制全职阶<br>被全职阶克制</div>
+                        </div>
+                        <div style="padding:10px;border:1px solid rgba(196,181,253,.3);border-radius:4px;background:rgba(15,23,42,.5);text-align:center">
+                            <div style="color:#fbbf24;font-weight:700;font-size:20px">Ruler</div>
+                            <div style="color:#a78bfa;font-size:12px;margin-top:4px">被 Avenger 克制<br>不受 Berserker 特攻</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="fgo-section-header" style="margin-top:32px">宝具类型</h2>
+
+                <div class="fgo-grid-3">
+                    <div class="fgo-card">
+                        <h3>🔴 单体宝具</h3>
+                        <p>
+                            对敌方单体造成大量伤害。适用于高难本、BOSS 战。
+                            典型从者：红阎魔（单体 Saber）、斯卡哈（单体 Lancer）。
+                        </p>
+                    </div>
+                    <div class="fgo-card">
+                        <h3>🟡 全体宝具</h3>
+                        <p>
+                            对敌方全体造成伤害。适用于周回、清杂兵。
+                            典型从者：摩根（全体 Berserker）、妖兰（全体 Lancer）。
+                        </p>
+                    </div>
+                    <div class="fgo-card">
+                        <h3>🟢 辅助宝具</h3>
+                        <p>
+                            不直接攻击而是提供 Buff / 回复 / 复活等效果。
+                            典型从者：玛修·基列莱特（全体无敌）、阿尔托莉雅·Caster（NP 充能）。
+                        </p>
+                    </div>
+                </div>
+
+                <div style="margin-top:12px" class="fgo-card">
+                    <h3>宝具等级与强化</h3>
+                    <p>
+                        重复获得同一从者可提升宝具等级（最高 Lv.5），每提升一级宝具伤害倍率大幅增加。
+                        宝具可通过「宝具强化关卡」或「从者强化关卡」获得性能提升或追加效果。
+                        部分从者拥有「宝具本」——通关后宝具倍率或效果会获得质的飞跃。
+                    </p>
+                    <div style="margin-top:10px">
+                        <span class="fgo-tag">宝具等级</span>
+                        <span class="fgo-tag">宝具本</span>
+                        <span class="fgo-tag">强化关卡</span>
+                        <span class="fgo-tag">宝具倍率</span>
+                    </div>
+                </div>
+
+                <h2 class="fgo-section-header" style="margin-top:32px">指令卡系统</h2>
+
+                <div class="fgo-card">
+                    <h3>三种指令卡详解</h3>
+                    <p>
+                        每名从者拥有五张指令卡，由 Buster / Arts / Quick 三种类型按固定配比组成。
+                        战斗中每回合随机抽选五张卡，从者每回合最多可行动三次。
+                    </p>
+                    <div style="margin-top:12px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+                        <div style="padding:14px;border:1px solid rgba(239,68,68,.4);border-radius:6px;background:rgba(239,68,68,.08)">
+                            <div style="color:#f87171;font-weight:700;font-size:18px;margin-bottom:6px">Buster 红卡</div>
+                            <div style="color:#cbd5e1;font-size:13px;line-height:1.6">
+                                伤害倍率最高<br>
+                                NP 获取最低<br>
+                                暴击星产出一般<br>
+                                红卡 Chain 额外 +20% 伤害
+                            </div>
+                        </div>
+                        <div style="padding:14px;border:1px solid rgba(96,165,250,.4);border-radius:6px;background:rgba(96,165,250,.08)">
+                            <div style="color:#60a5fa;font-weight:700;font-size:18px;margin-bottom:6px">Arts 蓝卡</div>
+                            <div style="color:#cbd5e1;font-size:13px;line-height:1.6">
+                                伤害倍率中等<br>
+                                NP 获取最高<br>
+                                暴击星产出低<br>
+                                蓝卡 Chain 全队 +20% NP
+                            </div>
+                        </div>
+                        <div style="padding:14px;border:1px solid rgba(74,222,128,.4);border-radius:6px;background:rgba(74,222,128,.08)">
+                            <div style="color:#6ee7b7;font-weight:700;font-size:18px;margin-bottom:6px">Quick 绿卡</div>
+                            <div style="color:#cbd5e1;font-size:13px;line-height:1.6">
+                                伤害倍率最低<br>
+                                NP 获取中等<br>
+                                暴击星产出最高<br>
+                                绿卡 Chain +10 暴击星
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="fgo-section-header" style="margin-top:32px">技能强化</h2>
+
+                <div class="fgo-grid-2">
+                    <div class="fgo-card">
+                        <h3>技能等级</h3>
+                        <p>
+                            每个从者拥有三个主动技能（部分从者有追加技能），
+                            技能等级从 Lv.1 到 Lv.10 消耗逐渐增加。Lv.7 以上需要「技能石」与「传承结晶」。
+                        </p>
+                        <p style="margin-top:8px">
+                            <strong>技能升级优先级建议：</strong><br>
+                            • 充能技能 > 增伤技能 > 生存技能<br>
+                            • 核心技能优先 10 级，次要技能 6 级即可<br>
+                            • 传承结晶极其稀缺，请谨慎使用
+                        </p>
+                    </div>
+                    <div class="fgo-card">
+                        <h3>追加技能</h3>
+                        <p>
+                            使用从者币可以解锁追加技能（Append Skill），每个从者最多三个：
+                            ① 初始 NP 提升，② 特定职阶特攻，③ 暴击星集中度提升。
+                        </p>
+                        <p style="margin-top:8px">
+                            💡 追加技能 2（对某一职阶的攻击适性）对周回有显著提升，
+                            建议优先解锁输出从者的追加技能 2。
+                        </p>
+                    </div>
+                </div>
+
+                <h2 class="fgo-section-header" style="margin-top:32px">灵基再临</h2>
+
+                <div class="fgo-grid-2">
+                    <div class="fgo-card">
+                        <h3>再临阶段</h3>
+                        <p>
+                            灵基再临（Ascension）是从者成长的核心环节。每突破一次等级上限 +10，
+                            总计四次再临。每次再临不仅提升战力，还会解锁新的卡面立绘与战斗模型。
+                            第四阶段（最终再临）的立绘通常最为华丽。
+                        </p>
+                    </div>
+                    <div class="fgo-card">
+                        <h3>消耗素材</h3>
+                        <p>
+                            灵基再临需要消耗各职阶对应的「棋子」与「辉石」，
+                            以及特定数量的稀有素材。高星从者需要的素材更加稀有。
+                            活动商店是获取棋子和辉石的主要途径。
+                        </p>
+                        <div style="margin-top:10px">
+                            <span class="fgo-tag">棋子</span>
+                            <span class="fgo-tag">辉石</span>
+                            <span class="fgo-tag">灵基再临</span>
+                            <span class="fgo-tag">最终再临</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

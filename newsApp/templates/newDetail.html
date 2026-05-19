@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}
+{% if mynew %}{{ mynew.title }}{% else %}活动详情{% endif %}
+{% endblock %}
+{% block content %}
+<link href="{% static 'css/news.css' %}" rel="stylesheet">
+<div class="fgo-page">
+    <div class="container">
+        {% if mynew %}
+        <div class="fgo-card" style="padding:28px 32px">
+            <h2 style="margin:0 0 10px;color:#fff;font-size:24px;font-weight:700">{{ mynew.title }}</h2>
+            <div style="margin-bottom:20px">
+                <span class="fgo-tag">{{ mynew.newType }}</span>
+                <span class="fgo-tag">{{ mynew.publishDate|date:"Y-m-d" }}</span>
+                <span class="fgo-tag">阅览 {{ mynew.views }}</span>
+            </div>
+            <div style="color:#cbd5e1;font-size:14px;line-height:1.9">
+                {{ mynew.description | safe }}
+            </div>
+            <div style="margin-top:24px">
+                <a class="btn btn-default" href="javascript:history.back()" style="border-color:rgba(196,181,253,.42);color:#e9d5ff;background:rgba(15,23,42,.62)">← 返回</a>
+            </div>
+        </div>
+        {% else %}
+        <div class="fgo-empty">
+            <h2 style="color:#fff;margin:0 0 10px">活动详情加载失败</h2>
+            <p>该活动记录不存在或已被删除。</p>
+            <div style="margin-top:16px">
+                <a class="btn btn-default" href="{% url 'newsApp:news' 'company' %}" style="border-color:rgba(196,181,253,.42);color:#e9d5ff;background:rgba(15,23,42,.62)">返回活动情报</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

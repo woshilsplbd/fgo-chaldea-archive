@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+{{newName}}
+{% endblock %}
+
+{% block content %}
+<link href="{% static 'css/news.css' %}" rel="stylesheet">
+<div class="container-fluid">
+    <div class="row">
+        <div class="fgo-hero">
+            <img class="img-responsive" src="{% static 'img/bbdubai.jpg' %}" alt="活动情报">
+            <div class="fgo-hero-title">
+                <h1>{{newName}}</h1>
+                <p>追踪迦勒底在时空旅途中的每一次重要事件。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="fgo-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div style="margin-bottom:20px">
+                    <a href="{% url 'newsApp:news' 'company' %}" class="btn btn-default" style="border-color:rgba(196,181,253,.42);color:#e9d5ff;background:rgba(15,23,42,.62);margin-right:8px">主线剧情</a>
+                    <a href="{% url 'newsApp:news' 'industry' %}" class="btn btn-default" style="border-color:rgba(196,181,253,.42);color:#e9d5ff;background:rgba(15,23,42,.62);margin-right:8px">限时活动</a>
+                    <a href="{% url 'newsApp:news' 'notice' %}" class="btn btn-default" style="border-color:rgba(196,181,253,.42);color:#e9d5ff;background:rgba(15,23,42,.62)">召唤公告</a>
+                </div>
+
+                {% if newList %}
+                {% for mynew in newList %}
+                <div class="fgo-card">
+                    <h3><a href="{% url 'newsApp:newDetail' mynew.id %}" style="color:#fff;text-decoration:none">{{ mynew.title }}</a></h3>
+                    <div>
+                        <span class="fgo-tag">{{ mynew.newType }}</span>
+                        <span class="fgo-tag">{{ mynew.publishDate|date:"Y-m-d" }}</span>
+                    </div>
+                    {% if mynew.mytxt %}
+                    <p>{{ mynew.mytxt|truncatechars:"150" }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="fgo-empty">
+                    <p style="margin-bottom:8px">暂无可用的 {{newName}} 资料。</p>
+                    <p style="font-size:13px;color:#7c3aed">以下是示例预填内容，待数据库录入后自动显示。</p>
+
+                    {% if newName == "主线剧情" %}
+                    <div style="margin-top:20px;text-align:left">
+                        <div class="fgo-card">
+                            <h3>第七特异点 — 绝对魔兽战线 巴比伦尼亚</h3>
+                            <div><span class="fgo-tag">主线剧情</span><span class="fgo-tag">第七特异点</span></div>
+                            <p>人理奠基值 EX。公元 2600 年的古代美索不达米亚，三女神同盟与魔兽战线展开激战。藤丸立香与玛修到达时，迎接他们的不是繁华的乌鲁克，而是被魔兽围困的最后要塞。贤王吉尔伽美什以全盛时期的姿态坐镇王座，然而即便是最伟大的王者，也无法独自抵挡来自「提亚马特」的回归……</p>
+                        </div>
+                        <div class="fgo-card">
+                            <h3>终局特异点 — 冠位时间神殿 所罗门</h3>
+                            <div><span class="fgo-tag">主线剧情</span><span class="fgo-tag">最终章</span></div>
+                            <p>人理烧却的真相在此揭晓。魔术王所罗门——不，是"盖提亚"——在时间神殿中等待着迦勒底最后的挑战。七十二柱魔神、人理烧却式、以及那位医生最后的秘密……这是跨越七个时代的旅程的终点，也是人类史最壮烈的决战。</p>
+                        </div>
+                        <div class="fgo-card">
+                            <h3>Lostbelt No.5 — 神代巨神海洋 亚特兰蒂斯</h3>
+                            <div><span class="fgo-tag">主线剧情</span><span class="fgo-tag">第二部</span></div>
+                            <p>异闻带深度 A+。在希腊神话被完整实现的海底世界中，奥林波斯诸神以机械神的真身君临大地。迦勒底需要穿越星辰大海，击败守护空想树的希腊机神，面对那"连神明也能击落"的冠位 Archer——月神的挽歌。</p>
+                        </div>
+                    </div>
+                    {% elif newName == "限时活动" %}
+                    <div style="margin-top:20px;text-align:left">
+                        <div class="fgo-card">
+                            <h3>SABER WARS 2 — 前往初始的宇宙</h3>
+                            <div><span class="fgo-tag">限时活动</span><span class="fgo-tag">2019</span></div>
+                            <p>宇宙中的神秘势力「暗黑帝国」控制了银河系，我们的女主角——太空·伊斯塔凛——踏上了成为银河最强 Saber 的道路。与阿尔托莉雅系列从者一起，驾驶飞船穿梭于星际之间，击败暗黑帝王。活动赠送从者为四星 Saber「谜之女主角 XX」。</p>
+                        </div>
+                        <div class="fgo-card">
+                            <h3>Fate/Requiem × 命运大回廊</h3>
+                            <div><span class="fgo-tag">限时活动</span><span class="fgo-tag">2020</span></div>
+                            <p>由 TYPE-MOON 旗下作品《Fate/Requiem》改编的联动活动。在「盘上游戏」的世界中，迦勒底一行人被卷入了以英灵为棋子的命运对决。来自Requiem世界的少年少年少年与他的从者「旅行者」一同登场。</p>
+                        </div>
+                        <div class="fgo-card">
+                            <h3>虚数大海战 — 幻想航海者</h3>
+                            <div><span class="fgo-tag">限时活动</span><span class="fgo-tag">2021</span></div>
+                            <p>在虚数之海中发现了一艘巨大的幽灵船。迦勒底一行人登船调查，却发现这艘船是某位未知英灵的"内心世界"。在这片由记忆与幻想编织的大海中，英灵与御主一同面对来自深海的无尽恶意。</p>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div style="margin-top:20px;text-align:left">
+                        <div class="fgo-card">
+                            <h3>「红阎魔 推荐召唤」</h3>
+                            <div><span class="fgo-tag">召唤公告</span><span class="fgo-tag">期间限定</span></div>
+                            <p>五星 Saber「红阎魔」期间限定登场！同时概率提升的四星从者包括「柳生但马守宗矩」与「加藤段藏」。点击查看详细召唤概率与期间。</p>
+                        </div>
+                        <div class="fgo-card">
+                            <h3>「圣杯战线 ～还有你吗？布鲁图～」开幕纪念</h3>
+                            <div><span class="fgo-tag">召唤公告</span><span class="fgo-tag">期间限定</span></div>
+                            <p>新从者五星 Ruler「凯撒大帝」实装。伴随圣杯战线活动同步开启，参与活动即可获得大量召唤石与传承结晶。</p>
+                        </div>
+                        <div class="fgo-card">
+                            <h3>「Fate/Accel Zero Order」复刻推荐召唤</h3>
+                            <div><span class="fgo-tag">召唤公告</span><span class="fgo-tag">复刻</span></div>
+                            <p>「Fate/Zero」合作活动复刻！卫宫切嗣、阿尔托莉雅、吉尔伽美什等经典从者概率提升。已拥有对应从者的玩家可获得稀有魔力棱镜。</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+                {% if pageData %}
+                <div class="paging">
+                    <ul id="pages" class="pagination">
+                        {% if pageData.first %}
+                        <li><a href="?page=1">1</a></li>
+                        {% endif %}
+                        {% if pageData.left %}
+                        {% if pageData.left_has_more %}
+                        <li><span>...</span></li>
+                        {% endif %}
+                        {% for i in pageData.left %}
+                        <li><a href="?page={{i}}">{{i}}</a></li>
+                        {% endfor %}
+                        {% endif %}
+                        <li class="active"><a href="?page={{pageData.page}}">
+                                {{pageData.page}}</a></li>
+                        {% if pageData.right %}
+                        {% for i in pageData.right %}
+                        <li><a href="?page={{i}}">{{i}}</a></li>
+                        {% endfor %}
+                        {% if pageData.right_has_more %}
+                        <li><span>...</span></li>
+                        {% endif %}
+                        {% endif %}
+                        {% if pageData.last %}
+                        <li><a href="?page={{pageData.total_pages}}">
+                                {{pageData.total_pages}}</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

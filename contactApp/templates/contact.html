@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+留言板
+{% endblock %}
+
+{% block content %}
+<link href="{% static 'css/contact.css' %}" rel="stylesheet">
+<div class="container-fluid">
+    <div class="row">
+        <div class="fgo-hero">
+            <img class="img-responsive" src="{% static 'img/sakurafive.png' %}" alt="御主留言">
+            <div class="fgo-hero-title">
+                <h1>留言板</h1>
+                <p>在这里留下你的声音——向迦勒底发送你的留言、建议或感想。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="fgo-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h2 class="fgo-section-header">留下你的留言</h2>
+
+                <div class="fgo-card" style="padding:28px 32px">
+                    <form id="messageForm" method="post" action="javascript:void(0)">
+                        {% csrf_token %}
+                        <div class="form-group" style="margin-bottom:18px">
+                            <label for="nickname" style="color:#e9d5ff;font-size:14px;font-weight:600;margin-bottom:6px;display:block">
+                                御主昵称 <span style="color:#f87171">*</span>
+                            </label>
+                            <input type="text" id="nickname" name="nickname" class="form-control" required
+                                style="border:1px solid rgba(196,181,253,.35);border-radius:4px;padding:10px 12px;color:#fff;background:rgba(15,23,42,.6);font-size:14px;width:100%"
+                                placeholder="你的御主名称">
+                        </div>
+
+                        <div class="form-group" style="margin-bottom:18px">
+                            <label for="message" style="color:#e9d5ff;font-size:14px;font-weight:600;margin-bottom:6px;display:block">
+                                留言内容 <span style="color:#f87171">*</span>
+                            </label>
+                            <textarea id="message" name="message" rows="5" class="form-control" required
+                                style="border:1px solid rgba(196,181,253,.35);border-radius:4px;padding:10px 12px;color:#fff;background:rgba(15,23,42,.6);font-size:14px;width:100%;resize:vertical"
+                                placeholder="想对迦勒底说什么？"></textarea>
+                            <div style="text-align:right;margin-top:4px;color:#64748b;font-size:12px">
+                                <span id="charCount">0</span> / 500
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom:22px">
+                            <label for="contact_info" style="color:#e9d5ff;font-size:14px;font-weight:600;margin-bottom:6px;display:block">
+                                联系方式 <span style="color:#64748b;font-size:12px">（选填——邮箱或社交账号）</span>
+                            </label>
+                            <input type="text" id="contact_info" name="contact_info" class="form-control"
+                                style="border:1px solid rgba(196,181,253,.35);border-radius:4px;padding:10px 12px;color:#fff;background:rgba(15,23,42,.6);font-size:14px;width:100%"
+                                placeholder="选填，仅用于管理员回复">
+                        </div>
+
+                        <div style="text-align:center">
+                            <button type="submit" class="btn btn-default"
+                                style="border-color:rgba(196,181,253,.42);color:#e9d5ff;background:rgba(124,58,237,.4);padding:10px 40px;font-size:15px;font-weight:600;transition:all .18s ease"
+                                onmouseover="this.style.background='rgba(124,58,237,.6)'"
+                                onmouseout="this.style.background='rgba(124,58,237,.4)'">
+                                发送留言 ✦
+                            </button>
+                        </div>
+                    </form>
+
+                    <div id="formSuccess" class="fgo-card" style="display:none;text-align:center;margin-top:20px">
+                        <h3 style="color:#6ee7b7">✦ 留言已发送 ✦</h3>
+                        <p>感谢你的留言，御主。你的声音已被迦勒底接收。</p>
+                        <button type="button" class="btn btn-default" onclick="resetForm()"
+                            style="border-color:rgba(196,181,253,.42);color:#e9d5ff;background:rgba(15,23,42,.62);margin-top:10px">
+                            继续留言
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        const form = document.getElementById('messageForm');
+        const nickname = document.getElementById('nickname');
+        const message = document.getElementById('message');
+        const charCount = document.getElementById('charCount');
+        const formSuccess = document.getElementById('formSuccess');
+
+        message.addEventListener('input', function () {
+            const len = this.value.length;
+            charCount.textContent = len;
+            if (len > 500) {
+                this.value = this.value.substring(0, 500);
+                charCount.textContent = 500;
+            }
+        });
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (!nickname.value.trim() || !message.value.trim()) return;
+
+            form.style.display = 'none';
+            formSuccess.style.display = 'block';
+        });
+    })();
+
+    function resetForm() {
+        document.getElementById('messageForm').style.display = 'block';
+        document.getElementById('formSuccess').style.display = 'none';
+        document.getElementById('messageForm').reset();
+        document.getElementById('charCount').textContent = '0';
+    }
+</script>
+{% endblock %}
