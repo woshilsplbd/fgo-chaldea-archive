@@ -186,14 +186,12 @@
 <div class="servant-panel">
     <div class="container">
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col-sm-12">
                 <h2>英灵资料</h2>
-                <p>先以 Saber、Archer、Caster 三个入口承接原有分类，后续可以继续扩展 Lancer、Rider、Assassin、Berserker、Extra 等职阶页面。</p>
-            </div>
-            <div class="col-sm-4 text-right">
-                <a class="btn btn-default" href="{% url 'productsApp:products' 'robot' %}">Saber</a>
-                <a class="btn btn-default" href="{% url 'productsApp:products' 'monitor' %}">Archer</a>
-                <a class="btn btn-default" href="{% url 'productsApp:products' 'face' %}">Caster</a>
+                <p>汇集 Saber、Archer、Lancer、Rider、Caster、Assassin、Berserker 及 Extra 职阶的从者档案。数据源自 Atlas Academy 数据库，按职阶分类检索。</p>
+                <div style="margin-top:16px">
+                    <a class="btn btn-default" href="{% url 'productsApp:products' 'robot' %}">进入英灵资料</a>
+                </div>
             </div>
         </div>
     </div>

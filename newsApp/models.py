@@ -4,9 +4,9 @@ import django.utils.timezone as timezone
 
 class MyNew(models.Model):
     NEWS_CHOICES = (
-        ('企业要闻', '企业要闻'),
-        ('行业新闻', '行业新闻'),
-        ('通知公告', '通知公告'),
+        ('主线剧情', '主线剧情'),
+        ('限时活动', '限时活动'),
+        ('召唤公告', '召唤公告'),
     )
 
     title = models.CharField(max_length=50, verbose_name='新闻标题')

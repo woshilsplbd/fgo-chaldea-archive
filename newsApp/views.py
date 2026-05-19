@@ -6,14 +6,14 @@ from pyquery import PyQuery as pq
 
 
 def news(request, newName):
-    # 解析请求的新闻类型
+    # 解析请求的活动类型
     submenu = newName
-    if newName == 'company':
-        newName = '企业要闻'
-    elif newName == 'industry':
-        newName = '行业新闻'
-    else:
-        newName = '通知公告'
+    DISPLAY_NAMES = {
+        'company': '主线剧情',
+        'industry': '限时活动',
+        'notice': '召唤公告',
+    }
+    newName = DISPLAY_NAMES.get(newName, '迦勒底公告')
     # 从数据库获取、过滤和排序数据
     newList = MyNew.objects.all().filter(
         newType=newName).order_by('-publishDate')
