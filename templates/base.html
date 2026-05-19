@@ -55,25 +55,37 @@
             line-height: 1.9;
         }
 
-        #ghost-guide-wrap {
-            position: relative;
-            max-width: 1140px;
-            margin: 0 auto;
-            height: 0;
-            overflow: visible;
+        /* BB 迪拜可拖动悬浮向导 */
+        .bb-guide {
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            z-index: 9999;
+            width: 130px;
+            cursor: grab;
+            user-select: none;
+            touch-action: none;
         }
 
-        #ghost-guide {
-            position: absolute;
-            right: 30px;
-            top: -560px;
-            width: 150px;
-            max-height: 170px;
-            object-fit: contain;
-            object-position: center center;
-            z-index: 9999;
-            cursor: pointer;
-            border-radius: 10px;
+        .bb-guide:active {
+            cursor: grabbing;
+        }
+
+        .bb-guide img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(124, 58, 237, .35);
+            pointer-events: none;
+        }
+
+        @media (max-width: 767px) {
+            .bb-guide {
+                width: 90px;
+                right: 12px;
+                bottom: 12px;
+            }
         }
 
         /* FGO QR 码区域 */
@@ -269,10 +281,6 @@
             .fgo-hero-title h1 {
                 font-size: 26px;
             }
-
-            #ghost-guide-wrap {
-                display: none;
-            }
         }
     </style>
 </head>
@@ -425,28 +433,76 @@
         $('#{{sub_menu}}').addClass("active");
     </script>
 
-    <div id="ghost-guide-wrap">
-        <img src="{% static 'BB迪拜_status_1.png' %}" id="ghost-guide" alt="BB迪拜语音向导">
+    <div class="bb-guide" id="bbGuide">
+        <img src="{% static 'BB迪拜_status_1.png' %}" id="ghost-guide" alt="BB迪拜语音向导" draggable="false">
     </div>
 
     <script>
+        const guideEl = document.getElementById('bbGuide');
         const guideImg = document.getElementById('ghost-guide');
         let isReadingMode = false;
+        let isDragging = false;
+        let dragStartX, dragStartY, startLeft, startRight, startBottom;
 
-        guideImg.addEventListener('click', function () {
+        // --- Drag logic ---
+        function onDragStart(e) {
+            const touch = e.touches ? e.touches[0] : e;
+            isDragging = true;
+            dragStartX = touch.clientX;
+            dragStartY = touch.clientY;
+            const cs = getComputedStyle(guideEl);
+            startRight = parseFloat(cs.right) || 30;
+            startBottom = parseFloat(cs.bottom) || 30;
+            startLeft = parseFloat(cs.left);
+            guideEl.style.right = startRight + 'px';
+            guideEl.style.bottom = startBottom + 'px';
+            document.addEventListener('mousemove', onDragMove);
+            document.addEventListener('mouseup', onDragEnd);
+            document.addEventListener('touchmove', onDragMove, { passive: false });
+            document.addEventListener('touchend', onDragEnd);
+            e.preventDefault();
+        }
+
+        function onDragMove(e) {
+            if (!isDragging) return;
+            const touch = e.touches ? e.touches[0] : e;
+            const dx = touch.clientX - dragStartX;
+            const dy = touch.clientY - dragStartY;
+            guideEl.style.right = (startRight - dx) + 'px';
+            guideEl.style.bottom = (startBottom - dy) + 'px';
+            if (startLeft !== undefined) {
+                guideEl.style.left = (startLeft + dx) + 'px';
+            }
+            e.preventDefault();
+        }
+
+        function onDragEnd() {
+            isDragging = false;
+            document.removeEventListener('mousemove', onDragMove);
+            document.removeEventListener('mouseup', onDragEnd);
+            document.removeEventListener('touchmove', onDragMove);
+            document.removeEventListener('touchend', onDragEnd);
+        }
+
+        guideEl.addEventListener('mousedown', onDragStart);
+        guideEl.addEventListener('touchstart', onDragStart, { passive: false });
+
+        // --- Voice reading mode (click not drag) ---
+        guideEl.addEventListener('click', function (e) {
+            if (isDragging) return;
             isReadingMode = !isReadingMode;
             if (isReadingMode) {
-                this.style.filter = 'drop-shadow(0 0 10px #7c3aed)';
+                guideImg.style.filter = 'drop-shadow(0 0 10px #7c3aed)';
                 ghostSpeak('语音记录模式启动。点击页面文字，我会为你读出来。');
             } else {
-                this.style.filter = 'none';
+                guideImg.style.filter = 'none';
                 window.speechSynthesis.cancel();
             }
         });
 
         document.addEventListener('click', function (e) {
             if (!isReadingMode) return;
-            if (e.target === guideImg) return;
+            if (e.target === guideImg || guideEl.contains(e.target)) return;
 
             const clickedText = e.target.innerText || e.target.textContent || '';
             const cleanText = clickedText.replace(/\s+/g, ' ').trim();
