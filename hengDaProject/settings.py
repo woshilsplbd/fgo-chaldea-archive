@@ -30,7 +30,7 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'False'
 
 ALLOWED_HOSTS = os.environ.get(
     'DJANGO_ALLOWED_HOSTS',
-    'web-production-63d3d.up.railway.app',
+    'web-production-63d3d.up.railway.app,healthcheck.railway.app,localhost,127.0.0.1'
 ).split(',')
 
 
