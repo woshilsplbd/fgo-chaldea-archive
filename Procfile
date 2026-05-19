@@ -1,1 +1,1 @@
-web: gunicorn hengDaProject.wsgi --log-file -
+web: python manage.py collectstatic --noinput && python manage.py migrate && gunicorn hengDaProject.wsgi --log-file -
