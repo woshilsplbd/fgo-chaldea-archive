@@ -6,3 +6,6 @@ pyquery==2.0.0
 Whoosh==2.7.4
 django-haystack==2.8.1
 django-widget-tweaks==1.4.12
+docxtpl
+python-docx
+docxcompose
