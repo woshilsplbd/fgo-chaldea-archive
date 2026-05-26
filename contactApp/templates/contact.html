@@ -26,7 +26,7 @@
                 <h2 class="fgo-section-header">留下你的留言</h2>
 
                 <div class="fgo-card" style="padding:28px 32px">
-                    <form id="messageForm" method="post" action="javascript:void(0)">
+                    <form id="messageForm" method="post" action="{% url 'contactApp:contact' %}">
                         {% csrf_token %}
                         <div class="form-group" style="margin-bottom:18px">
                             <label for="nickname" style="color:#e9d5ff;font-size:14px;font-weight:600;margin-bottom:6px;display:block">
@@ -99,20 +99,14 @@
             }
         });
 
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            if (!nickname.value.trim() || !message.value.trim()) return;
-
-            form.style.display = 'none';
-            formSuccess.style.display = 'block';
-        });
+        {% if saved %}
+        form.style.display = 'none';
+        formSuccess.style.display = 'block';
+        {% endif %}
     })();
 
     function resetForm() {
-        document.getElementById('messageForm').style.display = 'block';
-        document.getElementById('formSuccess').style.display = 'none';
-        document.getElementById('messageForm').reset();
-        document.getElementById('charCount').textContent = '0';
+        window.location.href = '{% url "contactApp:contact" %}';
     }
 </script>
 {% endblock %}
