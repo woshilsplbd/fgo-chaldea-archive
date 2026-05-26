@@ -13,8 +13,8 @@ from docx.shared import Mm, Inches, Pt
 
 # Create your models here.
 class Ad(models.Model):
-    title = models.CharField(max_length=50, verbose_name='招聘岗位')
-    description = models.TextField(verbose_name='岗位要求')
+    title = models.CharField(max_length=50, verbose_name='用户名')
+    description = models.TextField(verbose_name='留言内容')
     publishDate = models.DateTimeField(max_length=20,
                                        default=timezone.now,
                                        verbose_name='发布时间')
@@ -23,8 +23,8 @@ class Ad(models.Model):
         return self.title
 
     class Meta:
-        verbose_name = '招聘广告'
-        verbose_name_plural = '招聘广告'
+        verbose_name = '御主留言'
+        verbose_name_plural = '御主留言'
         ordering = ('-publishDate', )
 
 
