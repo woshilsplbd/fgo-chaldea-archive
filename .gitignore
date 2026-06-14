@@ -23,3 +23,8 @@ whoosh_index/
 # OS
 .DS_Store
 Thumbs.db
+
+db.sqlite3
+db_backup.sqlite3
+*.sqlite3
+*.env
