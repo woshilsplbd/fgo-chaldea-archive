@@ -45,7 +45,7 @@ hengDaProject-08/
 ├── requirements.txt            # Python 依赖清单
 ├── runtime.txt                 # Python 版本（3.8.16）
 ├── Procfile                    # Railway 部署启动命令
-├── db.sqlite3                  # SQLite 数据库文件
+├── db.sqlite3                  # 本地开发数据库文件，已通过 .gitignore 忽略，不上传仓库
 │
 ├── hengDaProject/              # 项目配置目录
 │   ├── settings.py             # 全局配置（数据库、中间件、应用注册、静态文件等）
