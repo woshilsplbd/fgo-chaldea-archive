@@ -10,3 +10,4 @@ docxtpl
 python-docx
 docxcompose
 jieba
+six==1.16.0
