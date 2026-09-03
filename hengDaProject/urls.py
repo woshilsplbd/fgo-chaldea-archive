@@ -22,6 +22,7 @@ from productsApp.views import servants_api
 urlpatterns = [
     path('admin/', admin.site.urls),                  # 管理员
     path('', home, name='home'),                      # 首页
+    path('agent/', include('agentApp.urls')),         # 迦勒底智能终端
     path('api/servants/', servants_api, name='servants_api'),
     path('aboutApp/', include('aboutApp.urls')),      # 公司简介
     path('contactApp/', include('contactApp.urls')),  # 人才招聘

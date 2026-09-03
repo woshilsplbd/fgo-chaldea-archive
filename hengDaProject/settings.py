@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'productsApp',
     'serviceApp',
     'scienceApp',
+    'agentApp',
     'haystack',
     'widget_tweaks',
 ]
