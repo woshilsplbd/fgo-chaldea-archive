@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+配队与周回
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="fgo-hero">
+            <img class="img-responsive" src="{% static 'img/sakurafive.png' %}" alt="配队与周回">
+            <div class="fgo-hero-title">
+                <h1>配队思路与周回攻略</h1>
+                <p>从周回到高难，从素材规划到编队策略。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="fgo-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="fgo-section-header">攻略卡片</h2>
+
+                <div class="fgo-grid-2">
+                    <div class="fgo-card">
+                        <h3>🔄 周回攻略</h3>
+                        <p>
+                            「周回」指反复通关同一关卡以获取素材或御主经验。高效周回的核心理念是：
+                            尽可能压缩回合数（3T 周回为目标），依靠光炮从者配合充能辅助实现宝具连发。
+                        </p>
+                        <p style="margin-top:8px">
+                            <strong>常用体系：</strong><br>
+                            • 双术师匠绿卡体系 — 以斯卡蒂为核心的绿卡冲浪队<br>
+                            • 双C呆蓝卡体系 — 以阿尔托莉雅·Caster为核心的蓝卡连发队<br>
+                            • 杀狐红卡体系 — 以光之高扬斯卡娅为核心的红卡暴击队
+                        </p>
+                        <div style="margin-top:10px">
+                            <span class="fgo-tag">3T</span>
+                            <span class="fgo-tag">周回</span>
+                            <span class="fgo-tag">光炮</span>
+                            <span class="fgo-tag">NP 充能</span>
+                        </div>
+                    </div>
+
+                    <div class="fgo-card">
+                        <h3>🏆 高难攻略</h3>
+                        <p>
+                            高难本通常具有特殊机制（如耐性、次数盾、职业变更等），
+                            需要针对性地编队。核心思路包括：使用单体宝具从者集中输出、
+                            利用无敌贯通应对回避/无敌状态、准备解弱体/强化解除对策。
+                        </p>
+                        <p style="margin-top:8px">
+                            <strong>推荐编成：</strong><br>
+                            • 单体打手 + 双辅助 + 后排嘲讽<br>
+                            • 磨队：Caster·玛修 + 卑弥呼 + 摩根（卑梅摩体系）<br>
+                            • 爆破队：Buff 全开 + 宝具三连
+                        </p>
+                        <div style="margin-top:10px">
+                            <span class="fgo-tag">高难</span>
+                            <span class="fgo-tag">单体</span>
+                            <span class="fgo-tag">磨队</span>
+                            <span class="fgo-tag">爆破</span>
+                        </div>
+                    </div>
+
+                    <div class="fgo-card">
+                        <h3>📦 素材规划</h3>
+                        <p>
+                            FGO 中的素材种类繁多，从「英雄之证」到「奇奇神酒」，
+                            每种从者需要不同的灵基再临与技能强化素材。建议优先养成以下泛用从者，
+                            然后根据卡池规划素材分配。
+                        </p>
+                        <p style="margin-top:8px">
+                            <strong>每周必刷素材本：</strong><br>
+                            • 修炼场（技能石）/ 宝物库（QP）/ 种火本（经验卡）<br>
+                            • 自由关卡（Free Quest）掉落的铜/银/金材料<br>
+                            • 活动商店优先兑换：传承结晶 > 金芙芙 > 素材 > 种火
+                        </p>
+                        <div style="margin-top:10px">
+                            <span class="fgo-tag">QP</span>
+                            <span class="fgo-tag">素材效率</span>
+                            <span class="fgo-tag">自由关卡</span>
+                            <span class="fgo-tag">活动商店</span>
+                        </div>
+                    </div>
+
+                    <div class="fgo-card">
+                        <h3>✨ 编队策略</h3>
+                        <p>
+                            编队不仅靠强度，也要考虑职阶克制（Saber > Lancer > Archer > Saber，
+                            Rider > Caster > Assassin > Rider，Berserker 克制全职业）。
+                            建议队伍中至少有一名克制职阶的打手、一名泛用辅助、以及一名应对紧急情况的从者。
+                        </p>
+                        <p style="margin-top:8px">
+                            <strong>推荐新人编队：</strong><br>
+                            • 前排：玛修（盾）+ 活动赠送四星 + 助战大佬的强力从者<br>
+                            • 后排：炮灰 + 任意从者<br>
+                            • 礼装选择：NP 初始礼装 ≥ 伤害礼装 > 星落礼装
+                        </p>
+                        <div style="margin-top:10px">
+                            <span class="fgo-tag">职阶克制</span>
+                            <span class="fgo-tag">编队</span>
+                            <span class="fgo-tag">礼装</span>
+                            <span class="fgo-tag">助战</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align:center;margin-top:8px">
+                    <a class="btn btn-default" href="{% url 'serviceApp:download' %}" style="border-color:rgba(196,181,253,.42);color:#e9d5ff;background:rgba(15,23,42,.62)">← 返回：新手入门</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

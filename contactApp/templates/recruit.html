@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+加入档案整理
+{% endblock %}
+
+{% block content %}
+<link href="{% static 'css/contact.css' %}" rel="stylesheet">
+<div class="container-fluid">
+    <div class="row">
+        <div class="fgo-hero">
+            <img class="img-responsive" src="{% static 'img/bbdubai.jpg' %}" alt="加入档案整理">
+            <div class="fgo-hero-title">
+                <h1>加入档案整理</h1>
+                <p>如果你也热爱 Fate/Grand Order，欢迎加入迦勒底档案馆的内容建设。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="fgo-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h2 class="fgo-section-header">关于档案整理</h2>
+
+                <div class="fgo-card">
+                    <h3>📚 我们是谁</h3>
+                    <p>
+                        迦勒底档案馆是一个由 FGO 爱好者共同维护的非官方同人资料站。
+                        我们致力于整理 Fate/Grand Order 中英灵、剧情、活动与游戏机制的信息，
+                        为所有御主提供便捷的查考资料。
+                    </p>
+                </div>
+
+                <div class="fgo-card">
+                    <h3>🙋 我们需要你</h3>
+                    <p>如果你具备以下任一技能或热情，欢迎加入我们：</p>
+                    <div style="margin-top:10px">
+                        <div style="display:flex;gap:10px;margin-bottom:8px;align-items:flex-start">
+                            <span style="color:#c084fc;font-weight:700">✦</span>
+                            <span style="color:#cbd5e1;font-size:14px"><strong>内容编辑：</strong>整理英灵剧情、活动攻略、撰写机制解析文案</span>
+                        </div>
+                        <div style="display:flex;gap:10px;margin-bottom:8px;align-items:flex-start">
+                            <span style="color:#c084fc;font-weight:700">✦</span>
+                            <span style="color:#cbd5e1;font-size:14px"><strong>前端开发：</strong>基于 Django 模板优化页面样式与交互体验</span>
+                        </div>
+                        <div style="display:flex;gap:10px;margin-bottom:8px;align-items:flex-start">
+                            <span style="color:#c084fc;font-weight:700">✦</span>
+                            <span style="color:#cbd5e1;font-size:14px"><strong>数据维护：</strong>对接 Atlas Academy API 或手工整理英灵数据</span>
+                        </div>
+                        <div style="display:flex;gap:10px;margin-bottom:8px;align-items:flex-start">
+                            <span style="color:#c084fc;font-weight:700">✦</span>
+                            <span style="color:#cbd5e1;font-size:14px"><strong>翻译：</strong>日文 / 英文 FGO 资料的翻译与校对</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fgo-card">
+                    <h3>📋 加入意向表单</h3>
+                    <p style="margin-bottom:16px">暂时只需提交意向，我们会在后续版本中开放正式申请流程。</p>
+
+                    <form id="joinForm" method="post" action="javascript:void(0)">
+                        <div class="form-group" style="margin-bottom:18px">
+                            <label for="join_name" style="color:#e9d5ff;font-size:14px;font-weight:600;margin-bottom:6px;display:block">
+                                称呼 <span style="color:#f87171">*</span>
+                            </label>
+                            <input type="text" id="join_name" name="join_name" class="form-control" required
+                                style="border:1px solid rgba(196,181,253,.35);border-radius:4px;padding:10px 12px;color:#fff;background:rgba(15,23,42,.6);font-size:14px;width:100%"
+                                placeholder="你的名字或昵称">
+                        </div>
+
+                        <div class="form-group" style="margin-bottom:18px">
+                            <label for="join_role" style="color:#e9d5ff;font-size:14px;font-weight:600;margin-bottom:6px;display:block">
+                                感兴趣的领域
+                            </label>
+                            <div style="display:flex;flex-wrap:wrap;gap:10px">
+                                <label class="fgo-tag" style="cursor:pointer;user-select:none">
+                                    <input type="checkbox" name="roles" value="内容编辑" style="margin-right:4px"> 内容编辑
+                                </label>
+                                <label class="fgo-tag" style="cursor:pointer;user-select:none">
+                                    <input type="checkbox" name="roles" value="前端开发" style="margin-right:4px"> 前端开发
+                                </label>
+                                <label class="fgo-tag" style="cursor:pointer;user-select:none">
+                                    <input type="checkbox" name="roles" value="数据维护" style="margin-right:4px"> 数据维护
+                                </label>
+                                <label class="fgo-tag" style="cursor:pointer;user-select:none">
+                                    <input type="checkbox" name="roles" value="翻译" style="margin-right:4px"> 翻译
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom:18px">
+                            <label for="join_contact" style="color:#e9d5ff;font-size:14px;font-weight:600;margin-bottom:6px;display:block">
+                                联系方式 <span style="color:#f87171">*</span>
+                            </label>
+                            <input type="text" id="join_contact" name="join_contact" class="form-control" required
+                                style="border:1px solid rgba(196,181,253,.35);border-radius:4px;padding:10px 12px;color:#fff;background:rgba(15,23,42,.6);font-size:14px;width:100%"
+                                placeholder="邮箱或社交账号">
+                        </div>
+
+                        <div class="form-group" style="margin-bottom:22px">
+                            <label for="join_message" style="color:#e9d5ff;font-size:14px;font-weight:600;margin-bottom:6px;display:block">
+                                留言或自我介绍（选填）
+                            </label>
+                            <textarea id="join_message" name="join_message" rows="3" class="form-control"
+                                style="border:1px solid rgba(196,181,253,.35);border-radius:4px;padding:10px 12px;color:#fff;background:rgba(15,23,42,.6);font-size:14px;width:100%;resize:vertical"
+                                placeholder="说说你对 FGO 的热爱或想参与的方向"></textarea>
+                        </div>
+
+                        <div style="text-align:center">
+                            <button type="submit" class="btn btn-default"
+                                style="border-color:rgba(196,181,253,.42);color:#e9d5ff;background:rgba(124,58,237,.4);padding:10px 40px;font-size:15px;font-weight:600;transition:all .18s ease"
+                                onmouseover="this.style.background='rgba(124,58,237,.6)'"
+                                onmouseout="this.style.background='rgba(124,58,237,.4)'">
+                                提交意向 ✦
+                            </button>
+                        </div>
+                    </form>
+
+                    <div id="joinSuccess" class="fgo-card" style="display:none;text-align:center;margin-top:20px">
+                        <h3 style="color:#6ee7b7">✦ 意向已提交 ✦</h3>
+                        <p>感谢你的关注！档案馆的运营者会在未来联系你。</p>
+                        <button type="button" class="btn btn-default" onclick="resetJoinForm()"
+                            style="border-color:rgba(196,181,253,.42);color:#e9d5ff;background:rgba(15,23,42,.62);margin-top:10px">
+                            重新填写
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        const form = document.getElementById('joinForm');
+        const success = document.getElementById('joinSuccess');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const name = document.getElementById('join_name').value.trim();
+            const contact = document.getElementById('join_contact').value.trim();
+            if (!name || !contact) return;
+
+            form.style.display = 'none';
+            success.style.display = 'block';
+        });
+    })();
+
+    function resetJoinForm() {
+        document.getElementById('joinForm').style.display = 'block';
+        document.getElementById('joinSuccess').style.display = 'none';
+        document.getElementById('joinForm').reset();
+    }
+</script>
+{% endblock %}

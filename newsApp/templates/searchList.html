@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}
+{{newName}}
+{% endblock %}
+{% block content %}
+<link href="{% static 'css/news.css' %}" rel="stylesheet">
+<div class="container-fluid">
+    <div class="row">
+        <div class="fgo-hero">
+            <img class="img-responsive" src="{% static 'img/bbdubai.jpg' %}" alt="搜索">
+            <div class="fgo-hero-title">
+                <h1>{{newName}}</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="fgo-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {% if newList %}
+                {% for mynew in newList %}
+                <div class="fgo-card">
+                    <h3><a href="{% url 'newsApp:newDetail' mynew.id %}" style="color:#fff;text-decoration:none">{{ mynew.title }}</a></h3>
+                    <div><span class="fgo-tag">{{ mynew.publishDate|date:"Y-m-d" }}</span></div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="fgo-empty">没有找到匹配的活动记录。</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

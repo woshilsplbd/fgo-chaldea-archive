@@ -1,0 +1,547 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+{{ productName }}
+{% endblock %}
+
+{% block content %}
+<link href="{% static 'css/products.css' %}" rel="stylesheet">
+<style>
+    .servant-data-hero {
+        position: relative;
+        min-height: 300px;
+        overflow: hidden;
+        background: #111827;
+    }
+
+    .servant-data-hero img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        object-position: center center;
+        display: block;
+    }
+
+    .servant-data-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(15, 23, 42, .82), rgba(88, 28, 135, .52), rgba(15, 23, 42, .68));
+        pointer-events: none;
+    }
+
+    .servant-data-title {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        z-index: 1;
+        width: 100%;
+        max-width: 1140px;
+        padding: 0 15px;
+        color: #fff;
+        transform: translate(-50%, -50%);
+    }
+
+    .servant-data-title h1 {
+        margin: 0 0 12px;
+        font-size: 38px;
+        font-weight: 700;
+        letter-spacing: 0;
+    }
+
+    .servant-data-title p {
+        max-width: 620px;
+        margin: 0;
+        color: #e5e7eb;
+        font-size: 16px;
+        line-height: 1.8;
+    }
+
+    .servant-toolbar {
+        margin: 4px 0 24px;
+        padding: 18px;
+        border: 1px solid rgba(168, 85, 247, .34);
+        border-radius: 6px;
+        background:
+            linear-gradient(135deg, rgba(15, 23, 42, .96), rgba(49, 18, 88, .92)),
+            #111827;
+        box-shadow: 0 14px 34px rgba(49, 18, 88, .18);
+    }
+
+    .servant-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 14px;
+    }
+
+    .servant-filter {
+        border: 1px solid rgba(196, 181, 253, .42);
+        border-radius: 4px;
+        padding: 7px 12px;
+        color: #e9d5ff;
+        background: rgba(15, 23, 42, .62);
+    }
+
+    .servant-filter.active {
+        border-color: #c084fc;
+        color: #fff;
+        background: #7c3aed;
+        box-shadow: 0 0 16px rgba(192, 132, 252, .35);
+    }
+
+    .servant-search {
+        display: flex;
+        gap: 8px;
+    }
+
+    .servant-search input {
+        flex: 1;
+        min-width: 0;
+        height: 36px;
+        border: 1px solid rgba(196, 181, 253, .42);
+        border-radius: 4px;
+        padding: 6px 10px;
+        color: #fff;
+        background: rgba(15, 23, 42, .72);
+    }
+
+    .servant-search input::placeholder {
+        color: #c4b5fd;
+    }
+
+    .servant-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+        gap: 18px;
+        margin-top: 18px;
+    }
+
+    .servant-card {
+        display: block;
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        border: 1px solid rgba(192, 132, 252, .46);
+        border-radius: 6px;
+        color: #e5e7eb;
+        background:
+            linear-gradient(180deg, rgba(88, 28, 135, .22), rgba(15, 23, 42, .64)),
+            rgba(15, 23, 42, .58);
+        backdrop-filter: blur(14px) saturate(132%);
+        -webkit-backdrop-filter: blur(14px) saturate(132%);
+        box-shadow: 0 10px 24px rgba(15, 23, 42, .16), inset 0 1px 0 rgba(255, 255, 255, .08);
+        text-decoration: none;
+        transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+        will-change: transform;
+    }
+
+    .servant-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background:
+            radial-gradient(circle at 20% 0%, rgba(216, 180, 254, .24), transparent 34%),
+            linear-gradient(135deg, rgba(255, 255, 255, .08), transparent 38%);
+        opacity: .76;
+        pointer-events: none;
+    }
+
+    .servant-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        background: linear-gradient(135deg, rgba(216, 180, 254, .34), rgba(124, 58, 237, .2));
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .servant-card:focus {
+        color: #fff;
+        border-color: rgba(216, 180, 254, .95);
+        box-shadow: 0 18px 34px rgba(88, 28, 135, .34), 0 0 18px rgba(192, 132, 252, .28);
+        text-decoration: none;
+    }
+
+    .servant-card img {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        object-position: center top;
+        display: block;
+        background: #111827;
+        transition: transform .22s ease, filter .22s ease;
+        will-change: transform;
+    }
+
+    .servant-card-body {
+        padding: 12px 14px 14px;
+    }
+
+    .servant-name {
+        min-height: 42px;
+        margin: 0 0 8px;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1.35;
+    }
+
+    .servant-stars {
+        margin: 0 0 8px;
+        color: #facc15;
+        font-size: 14px;
+        letter-spacing: 0;
+        text-shadow: 0 0 10px rgba(250, 204, 21, .42);
+    }
+
+    .servant-meta {
+        margin: 0;
+        color: #cbd5e1;
+        font-size: 13px;
+        line-height: 1.7;
+    }
+
+    .servant-state {
+        margin-top: 18px;
+        padding: 18px;
+        border: 1px solid rgba(168, 85, 247, .24);
+        border-radius: 6px;
+        color: #cbd5e1;
+        background: #111827;
+        text-align: center;
+    }
+
+    .servant-pager {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 24px;
+    }
+
+    .servant-page-info {
+        min-width: 128px;
+        color: #475569;
+        text-align: center;
+    }
+
+    .servant-card.is-opening {
+        animation: cardClickLift .18s ease both;
+    }
+
+    .servant-card.is-opening::after {
+        animation: cardClickFade .18s ease both;
+    }
+
+    @keyframes cardClickLift {
+        from {
+            transform: translateY(-4px);
+        }
+
+        to {
+            transform: translateY(-4px) scale(.985);
+        }
+    }
+
+    @keyframes cardClickFade {
+        from {
+            opacity: 0;
+        }
+
+        55% {
+            opacity: .32;
+        }
+
+        to {
+            opacity: .12;
+        }
+    }
+
+    @media (hover: hover) {
+        .servant-card:hover {
+            color: #fff;
+            border-color: rgba(216, 180, 254, .95);
+            box-shadow: 0 18px 34px rgba(88, 28, 135, .34), 0 0 22px rgba(192, 132, 252, .34);
+            text-decoration: none;
+            transform: translateY(-4px);
+        }
+
+        .servant-card:hover img {
+            filter: saturate(1.08);
+            transform: scale(1.055);
+        }
+    }
+
+    @media (max-width: 767px) {
+        .servant-data-hero,
+        .servant-data-hero img {
+            min-height: 240px;
+            height: 240px;
+        }
+
+        .servant-data-title h1 {
+            font-size: 30px;
+        }
+
+        .servant-search {
+            display: block;
+        }
+
+        .servant-search input,
+        .servant-search button {
+            width: 100%;
+            margin-bottom: 8px;
+        }
+
+        .servant-grid {
+            grid-template-columns: repeat(auto-fill, minmax(142px, 1fr));
+            gap: 14px;
+        }
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="servant-data-hero">
+            <img class="img-responsive model-img" src="{% static 'img/sakurafive.png' %}" alt="英灵资料">
+            <div class="servant-data-title">
+                <h1>英灵资料</h1>
+                <p>通过 Django 后端连接 Atlas Academy API，按职阶、名称与页码检索英灵档案。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row row-3">
+        <div class="col-md-12">
+            <div class="model-details-title">{{ productName }}</div>
+            <div class="model-details">
+                <div class="servant-toolbar">
+                    <div id="servant-filters" class="servant-filters">
+                        <button type="button" class="servant-filter active" data-class-name="All">All</button>
+                        <button type="button" class="servant-filter" data-class-name="Saber">Saber</button>
+                        <button type="button" class="servant-filter" data-class-name="Archer">Archer</button>
+                        <button type="button" class="servant-filter" data-class-name="Lancer">Lancer</button>
+                        <button type="button" class="servant-filter" data-class-name="Rider">Rider</button>
+                        <button type="button" class="servant-filter" data-class-name="Caster">Caster</button>
+                        <button type="button" class="servant-filter" data-class-name="Assassin">Assassin</button>
+                        <button type="button" class="servant-filter" data-class-name="Berserker">Berserker</button>
+                        <button type="button" class="servant-filter" data-class-name="Extra">Extra</button>
+                    </div>
+                    <form id="servant-search-form" class="servant-search">
+                        <input id="servant-search-input" type="search" placeholder="搜索英灵名称">
+                        <button type="submit" class="btn btn-primary">搜索</button>
+                    </form>
+                </div>
+
+                <div id="servant-state" class="servant-state">正在连接迦勒底资料库...</div>
+                <div id="servant-grid" class="servant-grid" aria-live="polite"></div>
+                <div class="servant-pager">
+                    <button id="servant-prev" type="button" class="btn btn-default">上一页</button>
+                    <span id="servant-page-info" class="servant-page-info">第 1 / 1 页</span>
+                    <button id="servant-next" type="button" class="btn btn-default">下一页</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        const fallbackImage = "{% static 'img/sakurafive.png' %}";
+        const grid = document.getElementById('servant-grid');
+        const stateBox = document.getElementById('servant-state');
+        const filters = Array.from(document.querySelectorAll('.servant-filter'));
+        const searchForm = document.getElementById('servant-search-form');
+        const searchInput = document.getElementById('servant-search-input');
+        const prevButton = document.getElementById('servant-prev');
+        const nextButton = document.getElementById('servant-next');
+        const pageInfo = document.getElementById('servant-page-info');
+
+        const state = {
+            className: 'All',
+            page: 1,
+            limit: 30,
+            search: '',
+            totalPages: 1
+        };
+
+        function escapeHtml(value) {
+            return String(value || '').replace(/[&<>"']/g, function (char) {
+                return {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#39;'
+                }[char];
+            });
+        }
+
+        function displayClassName(value) {
+            const names = {
+                moonCancer: 'Moon Cancer',
+                alterEgo: 'Alter Ego',
+                shielder: 'Shielder',
+                ruler: 'Ruler',
+                avenger: 'Avenger',
+                foreigner: 'Foreigner',
+                pretender: 'Pretender',
+                beast: 'Beast'
+            };
+            return names[value] || (value ? value.charAt(0).toUpperCase() + value.slice(1) : 'Unknown');
+        }
+
+        function rarityStars(value) {
+            const rarity = Number(value || 0);
+            return rarity > 0 ? '★'.repeat(rarity) : '未记录';
+        }
+
+        function setLoading() {
+            grid.innerHTML = '';
+            stateBox.textContent = '正在连接迦勒底资料库...';
+            stateBox.style.display = 'block';
+            prevButton.disabled = true;
+            nextButton.disabled = true;
+        }
+
+        function setError() {
+            grid.innerHTML = '';
+            stateBox.textContent = '英灵资料加载失败，请检查网络或 requests 依赖';
+            stateBox.style.display = 'block';
+            prevButton.disabled = true;
+            nextButton.disabled = true;
+        }
+
+        function updateControls(data) {
+            state.page = data.page || 1;
+            state.totalPages = data.totalPages || 1;
+            pageInfo.textContent = '第 ' + state.page + ' / ' + state.totalPages + ' 页';
+            prevButton.disabled = !data.hasPrev;
+            nextButton.disabled = !data.hasNext;
+        }
+
+        function renderServants(servants) {
+            if (!servants.length) {
+                grid.innerHTML = '';
+                stateBox.textContent = '没有找到匹配的英灵资料';
+                stateBox.style.display = 'block';
+                return;
+            }
+
+            grid.innerHTML = servants.map(function (servant) {
+                const image = servant.face || servant.image || fallbackImage;
+                const className = servant.className || servant.classType || 'Unknown';
+                const detailId = servant.id || servant.collectionNo;
+                const detailUrl = detailId ? '/productsApp/productDetail/' + encodeURIComponent(detailId) + '/' : '#';
+
+                return [
+                    '<a class="servant-card" href="' + escapeHtml(detailUrl) + '">',
+                    '<img src="' + escapeHtml(image) + '" alt="' + escapeHtml(servant.name || '英灵资料') + '">',
+                    '<div class="servant-card-body">',
+                    '<h3 class="servant-name">' + escapeHtml(servant.name || 'Unknown') + '</h3>',
+                    '<p class="servant-stars">' + escapeHtml(rarityStars(servant.rarity)) + '</p>',
+                    '<p class="servant-meta">职阶：' + escapeHtml(displayClassName(className)) + '</p>',
+                    '<p class="servant-meta">编号：No.' + escapeHtml(servant.collectionNo || '-') + '</p>',
+                    '</div>',
+                    '</a>'
+                ].join('');
+            }).join('');
+
+            stateBox.style.display = 'none';
+            bindCardTransitions();
+        }
+
+        function bindCardTransitions() {
+            Array.from(document.querySelectorAll('.servant-card')).forEach(function (card) {
+                card.addEventListener('click', function (event) {
+                    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) {
+                        return;
+                    }
+
+                    const href = card.getAttribute('href');
+                    if (!href || href === '#') {
+                        return;
+                    }
+
+                    event.preventDefault();
+                    card.classList.add('is-opening');
+                    window.setTimeout(function () {
+                        window.location.href = href;
+                    }, 150);
+                });
+            });
+        }
+
+        function loadServants() {
+            const params = new URLSearchParams({
+                className: state.className,
+                page: String(state.page),
+                limit: String(state.limit)
+            });
+
+            if (state.search) {
+                params.set('search', state.search);
+            }
+
+            setLoading();
+
+            fetch('/api/servants/?' + params.toString())
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw new Error('request failed');
+                    }
+                    return response.json();
+                })
+                .then(function (data) {
+                    if (!data.ok) {
+                        throw new Error(data.message || 'request failed');
+                    }
+                    updateControls(data);
+                    renderServants(data.results || []);
+                })
+                .catch(setError);
+        }
+
+        filters.forEach(function (button) {
+            button.addEventListener('click', function () {
+                filters.forEach(function (item) {
+                    item.classList.remove('active');
+                });
+                button.classList.add('active');
+                state.className = button.getAttribute('data-class-name') || 'All';
+                state.page = 1;
+                loadServants();
+            });
+        });
+
+        searchForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            state.search = searchInput.value.trim();
+            state.page = 1;
+            loadServants();
+        });
+
+        prevButton.addEventListener('click', function () {
+            if (state.page > 1) {
+                state.page -= 1;
+                loadServants();
+            }
+        });
+
+        nextButton.addEventListener('click', function () {
+            if (state.page < state.totalPages) {
+                state.page += 1;
+                loadServants();
+            }
+        });
+
+        loadServants();
+    })();
+</script>
+{% endblock %}

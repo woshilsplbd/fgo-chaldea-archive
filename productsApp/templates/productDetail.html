@@ -1,0 +1,458 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+{% if servant %}{{ servant.name }}{% else %}英灵详情{% endif %}
+{% endblock %}
+
+{% block content %}
+<link href="{% static 'css/products.css' %}" rel="stylesheet">
+<style>
+    .servant-detail-page {
+        padding: 34px 0 52px;
+        background:
+            linear-gradient(180deg, rgba(15, 23, 42, .04), rgba(88, 28, 135, .08));
+    }
+
+    .servant-detail-shell {
+        overflow: hidden;
+        border: 1px solid rgba(168, 85, 247, .36);
+        border-radius: 8px;
+        background:
+            linear-gradient(135deg, rgba(15, 23, 42, .97), rgba(49, 18, 88, .94)),
+            #111827;
+        box-shadow: 0 20px 44px rgba(30, 27, 75, .24);
+    }
+
+    .servant-detail-image {
+        min-height: 520px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        background:
+            radial-gradient(circle at 50% 22%, rgba(216, 180, 254, .24), transparent 38%),
+            linear-gradient(180deg, rgba(76, 29, 149, .24), rgba(15, 23, 42, .82));
+    }
+
+    .servant-detail-image img {
+        width: 100%;
+        max-height: 680px;
+        object-fit: contain;
+        object-position: center bottom;
+        display: block;
+    }
+
+    .servant-detail-info {
+        padding: 34px 34px 38px;
+        color: #e5e7eb;
+    }
+
+    .servant-detail-info h1 {
+        margin: 0 0 14px;
+        color: #fff;
+        font-size: 34px;
+        font-weight: 700;
+        letter-spacing: 0;
+    }
+
+    .servant-class-icon {
+        display: inline-block;
+        width: 48px;
+        height: 48px;
+        margin-right: 12px;
+        border-radius: 6px;
+        background: rgba(15, 23, 42, .6);
+        vertical-align: middle;
+        object-fit: contain;
+        padding: 4px;
+    }
+
+    .servant-detail-stars {
+        margin-bottom: 18px;
+        color: #facc15;
+        font-size: 20px;
+        letter-spacing: 0;
+        text-shadow: 0 0 12px rgba(250, 204, 21, .4);
+    }
+
+    .servant-detail-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 24px;
+    }
+
+    .servant-detail-chip {
+        border: 1px solid rgba(196, 181, 253, .45);
+        border-radius: 4px;
+        padding: 7px 11px;
+        color: #e9d5ff;
+        font-size: 13px;
+        background: rgba(15, 23, 42, .58);
+    }
+
+    .servant-section {
+        margin-top: 28px;
+        padding-top: 22px;
+        border-top: 1px solid rgba(168, 85, 247, .2);
+    }
+
+    .servant-section:first-of-type {
+        border-top: none;
+        padding-top: 0;
+    }
+
+    .servant-section h2 {
+        position: relative;
+        margin: 0 0 16px;
+        padding-bottom: 10px;
+        color: #e9d5ff;
+        font-size: 20px;
+        font-weight: 700;
+        border-bottom: 1px solid rgba(168, 85, 247, .28);
+    }
+
+    .servant-section h2::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -1px;
+        width: 64px;
+        height: 2px;
+        background: linear-gradient(90deg, #7c3aed, #a78bfa);
+        border-radius: 1px;
+    }
+
+    .servant-section > p {
+        color: #d1d5db;
+        line-height: 1.9;
+        font-size: 14px;
+    }
+
+    /* Noble Phantasm Cards - Mooncell style */
+    .noble-card {
+        position: relative;
+        margin-bottom: 16px;
+        padding: 16px;
+        border: 1px solid rgba(250, 204, 21, .25);
+        border-radius: 6px;
+        background:
+            linear-gradient(135deg, rgba(15, 23, 42, .7), rgba(49, 18, 88, .6));
+        box-shadow: 0 2px 12px rgba(250, 204, 21, .08), inset 0 1px 0 rgba(255, 255, 255, .04);
+    }
+
+    .noble-card::before {
+        content: "宝具";
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 3px 10px;
+        border-radius: 0 6px 0 6px;
+        color: #facc15;
+        font-size: 11px;
+        font-weight: 700;
+        background: rgba(250, 204, 21, .12);
+        letter-spacing: 1px;
+    }
+
+    .noble-card h3 {
+        margin: 0 0 10px;
+        padding-right: 50px;
+        color: #fef9c3;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .noble-card .noble-tags {
+        margin-bottom: 10px;
+    }
+
+    .noble-card .noble-tags .servant-detail-chip {
+        display: inline-block;
+        margin: 0 6px 6px 0;
+        font-size: 12px;
+        padding: 4px 10px;
+        border-color: rgba(250, 204, 21, .3);
+        color: #fde68a;
+    }
+
+    .noble-card p {
+        color: #d1d5db;
+        font-size: 13px;
+        line-height: 1.8;
+    }
+
+    /* Skill Cards - Mooncell style */
+    .skill-card {
+        display: flex;
+        gap: 14px;
+        margin-bottom: 14px;
+        padding: 14px;
+        border: 1px solid rgba(196, 181, 253, .22);
+        border-radius: 6px;
+        background: rgba(15, 23, 42, .5);
+        transition: border-color .18s ease, background .18s ease;
+    }
+
+    .skill-card:hover {
+        border-color: rgba(196, 181, 253, .4);
+        background: rgba(15, 23, 42, .65);
+    }
+
+    .skill-card-icon {
+        flex-shrink: 0;
+        width: 52px;
+        height: 52px;
+        border-radius: 6px;
+        background: rgba(15, 23, 42, .6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .skill-card-icon img {
+        width: 44px;
+        height: 44px;
+        object-fit: contain;
+    }
+
+    .skill-card-icon .skill-icon-fallback {
+        width: 44px;
+        height: 44px;
+        border-radius: 4px;
+        background: linear-gradient(135deg, #7c3aed, #4338ca);
+    }
+
+    .skill-card-body {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .skill-card-body h3 {
+        margin: 0 0 6px;
+        color: #fff;
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    .skill-card-body .skill-tags {
+        margin-bottom: 6px;
+    }
+
+    .skill-card-body .skill-tags .servant-detail-chip {
+        display: inline-block;
+        margin: 0 6px 4px 0;
+        font-size: 11px;
+        padding: 3px 8px;
+        border-color: rgba(196, 181, 253, .3);
+    }
+
+    .skill-card-body p {
+        color: #cbd5e1;
+        font-size: 13px;
+        line-height: 1.7;
+        margin: 0;
+    }
+
+    /* Description styling */
+    .servant-description {
+        padding: 14px;
+        border: 1px solid rgba(168, 85, 247, .18);
+        border-radius: 6px;
+        background: rgba(15, 23, 42, .4);
+    }
+
+    .servant-description p {
+        margin: 0;
+        color: #cbd5e1;
+        font-size: 14px;
+        line-height: 1.9;
+    }
+
+    .servant-detail-actions {
+        margin-top: 28px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .servant-detail-actions .btn {
+        transition: all .18s ease;
+    }
+
+    .servant-detail-actions .btn-default {
+        border-color: rgba(196, 181, 253, .42);
+        color: #e9d5ff;
+        background: rgba(15, 23, 42, .62);
+    }
+
+    .servant-detail-actions .btn-default:hover {
+        border-color: rgba(196, 181, 253, .7);
+        color: #fff;
+        background: rgba(124, 58, 237, .4);
+    }
+
+    .servant-detail-error {
+        padding: 32px;
+        border: 1px solid rgba(168, 85, 247, .36);
+        border-radius: 8px;
+        color: #e5e7eb;
+        background: #111827;
+        text-align: center;
+    }
+
+    /* Loading/error state for image */
+    .servant-detail-image img {
+        transition: opacity .3s ease;
+    }
+
+    .servant-detail-image img[data-loaded="false"] {
+        opacity: 0;
+    }
+
+    /* Class badge */
+    .servant-class-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 14px;
+    }
+
+    .servant-class-badge .class-label {
+        padding: 4px 14px;
+        border-radius: 4px;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 700;
+        background: linear-gradient(135deg, #7c3aed, #6d28d9);
+        box-shadow: 0 0 12px rgba(124, 58, 237, .3);
+    }
+
+    @media (max-width: 991px) {
+        .servant-detail-image {
+            min-height: 420px;
+        }
+
+        .servant-detail-info {
+            padding: 24px 20px 30px;
+        }
+
+        .skill-card {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .skill-card-icon {
+            width: 44px;
+            height: 44px;
+        }
+
+        .skill-card-icon img {
+            width: 36px;
+            height: 36px;
+        }
+    }
+</style>
+
+<div class="servant-detail-page">
+    <div class="container">
+        {% if servant %}
+        <div class="servant-detail-shell">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="servant-detail-image">
+                        <img src="{{ servant.largeImage }}" alt="{{ servant.name }}" data-loaded="false" onload="this.dataset.loaded='true'" onerror="this.src='{% static 'img/sakurafive.png' %}';this.dataset.loaded='true'">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="servant-detail-info">
+                        <div class="servant-class-badge">
+                            <span class="class-label">{{ servant.displayClassName }}</span>
+                        </div>
+                        <h1>{{ servant.name }}</h1>
+                        <div class="servant-detail-stars">
+                            {{ servant.rarityStars }}
+                        </div>
+                        <div class="servant-detail-meta">
+                            <span class="servant-detail-chip">职阶：{{ servant.displayClassName }}</span>
+                            <span class="servant-detail-chip">稀有度：{{ servant.rarity }} 星</span>
+                            <span class="servant-detail-chip">编号：No.{{ servant.collectionNo }}</span>
+                        </div>
+
+                        <div class="servant-section">
+                            <h2>简介</h2>
+                            <div class="servant-description">
+                                <p>{{ servant.description|linebreaksbr }}</p>
+                            </div>
+                        </div>
+
+                        <div class="servant-section">
+                            <h2>宝具</h2>
+                            {% for noble in servant.noblePhantasms %}
+                            <div class="noble-card">
+                                <h3>{{ noble.name }}</h3>
+                                <div class="noble-tags">
+                                    <span class="servant-detail-chip">Rank：{{ noble.rank }}</span>
+                                    {% if noble.card %}
+                                    <span class="servant-detail-chip">类型：{{ noble.card }}</span>
+                                    {% endif %}
+                                </div>
+                                {% if noble.detail %}
+                                <p>{{ noble.detail|linebreaksbr }}</p>
+                                {% else %}
+                                <p>暂无宝具说明。</p>
+                                {% endif %}
+                            </div>
+                            {% empty %}
+                            <p>暂无宝具资料。</p>
+                            {% endfor %}
+                        </div>
+
+                        <div class="servant-section">
+                            <h2>技能</h2>
+                            {% for skill in servant.skills %}
+                            <div class="skill-card">
+                                <div class="skill-card-icon">
+                                    {% if skill.icon %}
+                                    <img src="{{ skill.icon }}" alt="{{ skill.name }}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                                    <div class="skill-icon-fallback" style="display:none"></div>
+                                    {% else %}
+                                    <div class="skill-icon-fallback"></div>
+                                    {% endif %}
+                                </div>
+                                <div class="skill-card-body">
+                                    <h3>{{ skill.name }}</h3>
+                                    <div class="skill-tags">
+                                        <span class="servant-detail-chip">Rank：{{ skill.rank }}</span>
+                                    </div>
+                                    {% if skill.detail %}
+                                    <p>{{ skill.detail|linebreaksbr }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% empty %}
+                            <p>暂无技能资料。</p>
+                            {% endfor %}
+                        </div>
+
+                        <div class="servant-detail-actions">
+                            <a class="btn btn-default" href="javascript:history.back()">← 返回</a>
+                            <a class="btn btn-default" href="{% url 'productsApp:products' 'robot' %}">返回英灵资料</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="servant-detail-error">
+            <h2>英灵详情加载失败</h2>
+            <p>请检查网络连接或 requests 依赖是否正确安装。</p>
+            <div class="servant-detail-actions" style="justify-content:center;margin-top:20px">
+                <a class="btn btn-default" href="{% url 'productsApp:products' 'robot' %}">返回英灵资料</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

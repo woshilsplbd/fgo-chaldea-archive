@@ -1,0 +1,38 @@
+.model-details .row-4
+{
+	margin-top: 20px;
+}
+.model-details .row-5
+{
+	border:none;
+}
+/* 分页控件样式 */
+.paging{
+	text-align:center;
+}
+.pagination .active a{
+	background-color:#7c3aed;
+	border-color:#7c3aed;
+}
+
+.pagination li a {
+	color: #c4b5fd;
+	background: rgba(15, 23, 42, .6);
+	border-color: rgba(168, 85, 247, .3);
+}
+
+.pagination li a:hover {
+	color: #fff;
+	background: rgba(124, 58, 237, .4);
+	border-color: rgba(168, 85, 247, .5);
+}
+
+.model-details-product-title{
+	padding:15px 0px;
+	font-size:18px;
+	border-bottom:1px solid rgba(168, 85, 247, .4);
+	color:#e9d5ff;
+	margin-bottom:10px;
+	margin-top:10px;
+	text-align:center;
+}

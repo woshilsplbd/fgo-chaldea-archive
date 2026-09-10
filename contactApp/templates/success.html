@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+操作成功
+{% endblock %}
+
+{% block content %}
+<div class="fgo-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="fgo-card" style="text-align:center;padding:40px">
+                    <h2 style="color:#6ee7b7;margin:0 0 16px">✦ 操作成功 ✦</h2>
+                    <p style="color:#cbd5e1;font-size:15px">感谢你的留言，御主。你的声音已被迦勒底接收。</p>
+                    <div style="margin-top:24px">
+                        <a class="btn btn-default" href="{% url 'contactApp:contact' %}"
+                            style="border-color:rgba(196,181,253,.42);color:#e9d5ff;background:rgba(15,23,42,.62);margin-right:8px">
+                            返回留言板
+                        </a>
+                        <a class="btn btn-default" href="{% url 'home' %}"
+                            style="border-color:rgba(196,181,253,.42);color:#e9d5ff;background:rgba(15,23,42,.62)">
+                            返回首页
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
